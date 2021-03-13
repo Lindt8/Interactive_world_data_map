@@ -11,6 +11,7 @@ This utility consists of a single Python script and is an easy-to-use tool for m
 <div style="text-align: center;"><object data="test_data/Olympic_medals_per_country.svg" type="image/svg+xml" style="width:50%;"></object></div>
 -->
 
+<br>
 
 In addition to Python's standard libraries, this tool requires the following additional libraries:
 
@@ -24,11 +25,11 @@ Once you have those libraries installed, you're good to go!  Upon running the sc
 
 Some options will be enabled/disabled automatically depending on your selection.  For instance, the "Tallied data column #" entry will become disables if "No" is selected for whether the data is already tallied since, in that scenario, the code will only count the number of instances a country's name appears.  When "Yes" is selected, columns for country names and the values associated with them must be provided (as is the case with the [Olympic medals](https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table) data in this example).
 
-<div style="text-align: center;"><img src="images/map_gui_medals.png" width="60%"></div>
+<p align="center"><img src="images/map_gui_medals.png" width="75%"></p>
 
 The "Run" button closes the window and runs the code, printing information to the terminal as usual.  The "Run (keep window open)" button will run the code but keep the window open in the background, redirecting terminal output to a popup window like the one shown below.  This is a useful feature if iterating on a map's design (colors, binning, etc.).
 
-<div style="text-align: center;"><img src="images/terminal_output.png" width="60%"></div>
+<p align="center"><img src="images/terminal_output.png" width="75%"></p>
 
 Upon the first time a file or specific spreadsheet is read, the checks shown in the above terminal window will be made.  The code prints the input country name, the ISO2 code for that country (identified by country_converter and used by Pygal), and the name of the country that ISO2 code corresponds to.  This serves to alert you if any countries are not properly identified and need to have their names modified/corrected.
 
