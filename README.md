@@ -2,15 +2,14 @@
 
 
 
-This utility consists of a single Python script and is an easy-to-use tool for making custom interactive Scalable Vector Graphics (SVG) world maps showing binned data.  It can handle data which has already been counted (a list of Countries with values provided) as well as data which has not been binned yet (a list of Countries to be counted), and it supports Excel files and comma/tab delimited text files (CSV/TSV).  It features a GUI for easily manipulating the various parameters controlling the output.  Below is an example map made with this tool showing the number of [Olympic medals won](https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table) by each country.
+This utility consists of a single Python script and is an easy-to-use tool for making custom interactive Scalable Vector Graphics (SVG) world maps showing binned data.  It can handle data which has already been counted (a list of Countries with values provided) as well as data which has not been binned yet (a list of Countries to be counted), and it supports Excel files and comma/tab delimited text files (CSV/TSV).  It features a GUI for easily manipulating the various parameters controlling the output.  Below is an example map made with this tool showing the number of [Olympic medals won](https://en.wikipedia.org/wiki/All-time_Olympic_Games_medal_table) by each country.  Since GitHub does not allow interactive SVG files to be displayed, click the image (or [here]()) to view the interactive version on a separate page.
 
+
+<div style="text-align: center;"><a href="https://github.com/Lindt8/Interactive_world_data_map"><img src="test_data/Olympic_medals_per_country.svg?sanitize=true" style="width:90%;" alt="Since GitHub does not allow interactive SVG files to be displayed, click the image to view the interactive version on a separate page."></a></div>
 
 <!--
-<div style="text-align: center;"><img src="test_data/Olympic_medals_per_country.svg" style="width:90%;"> </div>
--->
-
 <div style="text-align: center;"><object data="test_data/Olympic_medals_per_country.svg" type="image/svg+xml" style="width:50%;"></object></div>
-
+-->
 
 
 In addition to Python's standard libraries, this tool requires the following additional libraries:
