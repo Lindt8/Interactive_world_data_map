@@ -279,7 +279,7 @@ legend_label = 'Count:'
 
 custom_style_color = '#0000FF'
 
-# PHITS userbase map mode
+
 user_tallied_quantity = 'Tallied quantity'          # this will appear in the table and, when the legend is disabled, the hover box in the SVG when mousing over countries
 user_table_coulmn_header = user_tallied_quantity    # this is the header in the second column of the output table
 user_table_country_coulmn_header = 'Country'        # this is the header in the first column of the output table
@@ -634,7 +634,7 @@ if USE_GUI:
     
     layout = [
           [sg.Text('Select the input file (Excel, .csv, or .tsv) and specify the location of the data:')],
-          [sg.Text('Input file',size=(9, 1)), sg.InputText(size=(60, 1), key='data_filepath',default_text=default_data_filepath, enable_events=True), sg.FileBrowse(initial_folder=default_data_folder,tooltip='Select the .xlsx file containing PHITS user data.')],
+          [sg.Text('Input file',size=(9, 1)), sg.InputText(size=(60, 1), key='data_filepath',default_text=default_data_filepath, enable_events=True), sg.FileBrowse(initial_folder=default_data_folder,tooltip='Select the file containing the country data.')],
           [sg.Text('Select sheet name (spreadsheets only)',size=(30, 1)), sg.InputCombo(list_of_sheetnames, key='select_worksheet',default_value=list_of_sheetnames[0],disabled=(not is_default_file_spreadsheet),enable_events=True)],
           [sg.Text('Is the data already tallied?'),sg.Radio('Yes', "RADIO3", key="already_tallied_yes", default=True, enable_events=True),
            sg.Radio('No', "RADIO3", key="already_tallied_no", default=False, enable_events=True)],
