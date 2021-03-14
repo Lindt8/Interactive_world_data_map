@@ -93,7 +93,7 @@ def generate_count_bins(data,nbins=4,spacing_style='lin',force_integer_bin_edges
     return count_bins
     
 def bin_map_colors(map_filepath,data,count_bins=[1,10,25,50,100],min_opacity=0.15,max_opacity=0.95):
-    global legend_label, show_legend, map_hover_text, include_overflow_bin
+    global legend_label, show_legend, map_hover_text, include_overflow_bin, force_integer_bin_edges
     f = open(map_filepath, mode='r', encoding='utf_8')
     new_text = ''
     nbins = len(count_bins) # including overflow bin
@@ -118,21 +118,41 @@ def bin_map_colors(map_filepath,data,count_bins=[1,10,25,50,100],min_opacity=0.1
         elif 'country map-element color-0' in text: 
             for key in data:
                 if key in line.split('"')[1][:2]: 
-                    if data[key]<=count_bins[0]:
-                        oi = 0
-                        opacity = opacity_bins[0]
-                    elif include_overflow_bin and data[key]>=count_bins[-1]:
-                        oi = len(opacity_bins)-1
-                        opacity = opacity_bins[-1]
-                    elif not include_overflow_bin and data[key]>=count_bins[-1]:
-                        opacity = 0.0
+                    if force_integer_bin_edges:
+                        if data[key]<=count_bins[0]:
+                            oi = 0
+                            opacity = opacity_bins[0]
+                        elif include_overflow_bin and data[key]>count_bins[-1]:
+                            oi = len(opacity_bins)-1
+                            opacity = opacity_bins[-1]
+                        elif not include_overflow_bin and data[key]>count_bins[-1]:
+                            opacity = 0.0
+                        else:
+                            #oi=next(i for i,v in enumerate(count_bins) if v >= data[key])-1
+                            oi = 0
+                            for oiii in range(len(count_bins)):
+                                if data[key] <= count_bins[oiii]: break
+                                oi = oiii
+                            opacity=opacity_bins[oi]
                     else:
-                        #oi=next(i for i,v in enumerate(count_bins) if v >= data[key])-1
-                        oi = 0
-                        for oiii in range(len(count_bins)):
-                            if data[key] < count_bins[oiii]: break
-                            oi = oiii
-                        opacity=opacity_bins[oi]
+                        if data[key]<=count_bins[0]:
+                            oi = 0
+                            opacity = opacity_bins[0]
+                        elif include_overflow_bin and data[key]>=count_bins[-1]:
+                            oi = len(opacity_bins)-1
+                            opacity = opacity_bins[-1]
+                        elif not include_overflow_bin and data[key]>count_bins[-1]:
+                            opacity = 0.0
+                        else:
+                            #oi=next(i for i,v in enumerate(count_bins) if v >= data[key])-1
+                            oi = 0
+                            for oiii in range(len(count_bins)):
+                                if include_overflow_bin:
+                                    if data[key] < count_bins[oiii]: break
+                                else:
+                                    if data[key] <= count_bins[oiii]: break
+                                oi = oiii
+                            opacity=opacity_bins[oi]
                     text =     '<g class="{} country map-element color-0 serie-{} series" style="fill-opacity: {:.6f}">'.format(key,oi+1,opacity)
                     break
             new_text += text
@@ -729,6 +749,7 @@ if USE_GUI:
                 
                                 
                                 window['custom_style_color'].Update(button_color=('#ffffff', gui_settings['set_line_color']))
+                                window['set_line_color'].Update(gui_settings['set_line_color'])
                                 #if key == 'already_tallied_yes' or key == 'already_tallied_no':
                                 is_data_already_in_tallied_form   = gui_settings['already_tallied_yes']
                                 if not is_data_already_in_tallied_form:
