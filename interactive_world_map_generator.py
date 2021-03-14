@@ -54,7 +54,7 @@ def add_count_bins_to_map(worldmap_chart,count_bins=[1,10,25,50,100]):
             if force_integer_bin_edges:
                 worldmap_chart.add('{:g}+'.format(count_bins[i]+1), [])
             else:
-                worldmap_chart.add('{:g}+'.format(count_bins[i]), [])
+                worldmap_chart.add('>{:g}'.format(count_bins[i]), [])
         else:
             if i==0:
                 left_val = count_bins[i]
@@ -144,8 +144,12 @@ def bin_map_colors(map_filepath,data,count_bins=[1,10,25,50,100],min_opacity=0.1
                             oi = 0
                             opacity = opacity_bins[0]
                         elif include_overflow_bin and data[key]>=count_bins[-1]:
-                            oi = len(opacity_bins)-1
-                            opacity = opacity_bins[-1]
+                            if data[key]==count_bins[-1]:
+                                oi = len(opacity_bins)-2
+                                opacity = opacity_bins[-2]
+                            else:
+                                oi = len(opacity_bins)-1
+                                opacity = opacity_bins[-1]
                         elif not include_overflow_bin and data[key]>count_bins[-1]:
                             opacity = 0.0
                         else:
@@ -153,7 +157,7 @@ def bin_map_colors(map_filepath,data,count_bins=[1,10,25,50,100],min_opacity=0.1
                             oi = 0
                             for oiii in range(len(count_bins)):
                                 if include_overflow_bin:
-                                    if data[key] < count_bins[oiii]: break
+                                    if data[key] <= count_bins[oiii]: break
                                 else:
                                     if data[key] <= count_bins[oiii]: break
                                 oi = oiii
@@ -685,8 +689,8 @@ if USE_GUI:
            sg.Radio('Automatic (linear)', "RADIO4", key="automatically_generate_bins_lin", default=False, enable_events=True),
            sg.Radio('Automatic (log)', "RADIO4", key="automatically_generate_bins_log", default=False, enable_events=True)],
           [sg.Text('',size=(10, 1)),sg.Checkbox('add overflow bin', default=include_overflow_bin,key='include_overflow_bin'),
-           sg.Text('# of bins ='),sg.Combo([str(i+1) for i in range(7)], key='num_auto_bins',default_value=num_auto_bins,disabled=(manually_enter_bins)),
-           sg.Checkbox('force integer bin edges', default=force_integer_bin_edges,key='force_integer_bin_edges')], # disabled=(manually_enter_bins)
+           sg.Checkbox('force integer bin edges', default=force_integer_bin_edges,key='force_integer_bin_edges'),
+           sg.Text('# of bins ='),sg.Combo([str(i+1) for i in range(7)], key='num_auto_bins',default_value=num_auto_bins,disabled=(manually_enter_bins))], # disabled=(manually_enter_bins)
           [sg.Text('Map bins',size=(12, 1)), sg.InputText(size=(50, 1), key='tally_bin_edges',default_text=str(tally_bin_edges).strip('[]'),disabled=(not manually_enter_bins))],
           [sg.Text('Table left title',size=(12, 1)), sg.InputText(size=(50, 1), key='user_table_country_coulmn_header',default_text=user_table_country_coulmn_header),sg.Text('',size=(2, 1))],
           [sg.Text('Table right title',size=(12, 1)), sg.InputText(size=(50, 1), key='user_table_coulmn_header',default_text=user_table_coulmn_header),sg.Text('',size=(2, 1))],
