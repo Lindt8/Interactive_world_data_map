@@ -63,7 +63,12 @@ def add_count_bins_to_map(worldmap_chart,count_bins=[1,10,25,50,100]):
                     left_val = count_bins[i]+1
                 else:
                     left_val = count_bins[i]
-            worldmap_chart.add('{:g}-{:g}'.format(left_val,count_bins[i+1]), [])
+            if force_integer_bin_edges and count_bins[i+1]==left_val:
+                worldmap_chart.add('{:g}'.format(left_val), [])
+            elif force_integer_bin_edges and left_val==0 and count_bins[i+1]==1:
+                worldmap_chart.add('{:g}'.format(count_bins[i+1]), [])
+            else:
+                worldmap_chart.add('{:g}-{:g}'.format(left_val,count_bins[i+1]), [])
     return worldmap_chart
 
 def generate_count_bins(data,nbins=4,spacing_style='lin',force_integer_bin_edges=True):
@@ -768,7 +773,7 @@ if USE_GUI:
                                     window['tally_bin_edges'].update(background_color='white',text_color='black')
                                 window['tally_bin_edges'].update(disabled=(not manually_enter_bins))
                                 window['num_auto_bins'].update(disabled=manually_enter_bins)
-                                window["force_integer_bin_edges"].update(disabled=manually_enter_bins)
+                                #window["force_integer_bin_edges"].update(disabled=manually_enter_bins)
                             
                                 #elif key == 'show_legend':
                                 show_legend = gui_settings['show_legend']
